@@ -72,6 +72,7 @@ def train(opt):
     state = torch.cat(tuple(state for _ in range(4)))[None, :, :, :]
 
     while iter < opt.num_iters:
+        # env.gamespeed += 0.001
         if torch.cuda.is_available():
             prediction = model(state.cuda())[0]
         else:

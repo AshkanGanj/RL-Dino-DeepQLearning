@@ -19,10 +19,10 @@ def show_processed_img(state):
         processed_state = state.squeeze(0).cpu().numpy()
 
         # Resize the image
-        scale_factor = 2.5  # Modify this value to change the size of the image
+        scale_factor = 2  # Modify this value to change the size of the image
         resized_state = cv2.resize(processed_state, None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_LINEAR)
 
-        # rotate the image
+        # rotate the image 90 degrees non clockwise
         rotated_state = cv2.rotate(resized_state, cv2.ROTATE_90_CLOCKWISE)
 
         # Display the rotated image in a window
@@ -50,6 +50,7 @@ def test(opt):
         prediction = model(state)[0]
         action = torch.argmax(prediction).item()
         next_state, raw_next_state, reward, done = env.step(action, True)
+        env.gamespeed += 0.001
         if torch.cuda.is_available():
             next_state = next_state.cuda()
         show_processed_img(next_state)

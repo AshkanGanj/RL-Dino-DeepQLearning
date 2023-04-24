@@ -209,8 +209,10 @@ class Dino():
 class Cactus(Sprite):
     def __init__(self, speed=5, sizex=-1, sizey=-1):
         Sprite.__init__(self, self.containers)
+        cacti_list = ["cacti-small.png", "cacti-big.png"]
+        # choose a random cactus
         self.images, self.rect = load_sprite_sheet(
-            "cacti-small.png", [2, 3, 6], 1, sizex, sizey, -1)
+            choice(cacti_list), [2, 3, 6], 1, sizex, sizey, -1)
         self.rect.bottom = int(0.98 * height)
         self.rect.left = width + self.rect.width
         self.image = self.images[randrange(0, 11)]
@@ -328,7 +330,6 @@ class Scoreboard():
     def get_score(self):
         return self.score
 
-
 class ChromeDino(object):
     def __init__(self):
         self.gamespeed = 5
@@ -403,20 +404,20 @@ class ChromeDino(object):
                     reward = 1
                     break
 
-        if len(self.cacti) < 2:
+        if len(self.cacti) < 10:
             if len(self.cacti) == 0 and len(self.pteras) == 0:
                 self.last_obstacle.empty()
                 self.last_obstacle.add(
                     Cactus(self.gamespeed, [60, 40, 20], choice([40, 45, 50])))
             else:
                 for l in self.last_obstacle:
-                    if l.rect.right < width * 0.7 and randrange(0, 50) == 10:
+                    if l.rect.right < width * 0.7 and randrange(7, 50) > 10:
                         self.last_obstacle.empty()
                         self.last_obstacle.add(
                             Cactus(self.gamespeed, [60, 40, 20], choice([40, 45, 50])))
 
         # if len(self.pteras) == 0 and randrange(0, 200) == 10 and self.counter > 500:
-        if len(self.pteras) == 0 and len(self.cacti) < 2 and randrange(0, 50) == 10 and self.counter > 500:
+        if len(self.pteras) == 0 and len(self.cacti) < 10 and randrange(5, 50) > 10 and self.counter > 500:
             for l in self.last_obstacle:
                 if l.rect.right < width * 0.8:
                     self.last_obstacle.empty()
