@@ -332,7 +332,7 @@ class Scoreboard():
 
 class ChromeDino(object):
     def __init__(self):
-        self.gamespeed = 5
+        self.gamespeed = 6
         self.gameOver = False
         self.gameQuit = False
         self.playerDino = Dino(44, 47)
